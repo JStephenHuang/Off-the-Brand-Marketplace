@@ -2,13 +2,11 @@ import mongoose, { Schema, InferSchemaType } from "mongoose";
 
 const userSchema = new Schema(
   {
-    _id: { type: String, required: true, unique: true },
-    firstname: { type: String, required: true },
-    lastname: { type: String, required: true },
+    _id: { type: String, required: true },
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true },
-    location: { type: String },
-    address: { type: String },
+    location: { type: String, default: "" },
+    address: { type: String, default: "" },
   },
   {
     timestamps: true,

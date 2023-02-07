@@ -1,0 +1,14 @@
+{
+  "name": "OTB-marketplace",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:JStephenHuang/Off-the-Brand-Marketplace.git",
+  "author": "JStephenHuang <jstephhuang@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently --kill-others 'yarn --cwd ./client dev' 'yarn --cwd ./server dev'"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}

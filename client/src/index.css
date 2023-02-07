@@ -2,6 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
+
 :root {
   @apply font-bold
+}
+
+/* ! NAVBAR */
+
+@layer components {
+  .navbar {
+    @apply fixed w-full h-[10%] z-[100]
+    flex items-center justify-between
+    border-b px-5 font-normal bg-white
+  }
+}
+
+/* ! CREATE LISTING PAGE */
+
+@layer components {
+  .upload-box {
+    @apply w-[90%] aspect-square
+    grid place-items-center 
+    border border-black 
+    text-gray-400 hover:bg-gray-200
+  }
+
+  .select-input {
+    @apply w-1/2 h-auto flex items-center justify-between 
+    border px-2 border-black
+    bg-inherit font-medium py-[0.65rem]
+  }
+
+  .form-headline-input {
+    @apply w-full border border-black
+    outline-none p-2 bg-transparent mt-3
+  }
+
+  .form-price-input { 
+    @apply border-none ml-2 
+    outline-none w-full
+    bg-transparent font-medium
+  }
 }

@@ -10,6 +10,8 @@ const listingSchema = new Schema(
     gender: { type: String },
     description: { type: String },
     price: { type: String },
+    seller: { type: String },
+    status: { type: String, required: true },
   },
   {
     timestamps: true,
