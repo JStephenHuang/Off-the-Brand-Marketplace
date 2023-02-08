@@ -7,12 +7,14 @@ import ConversationPage from "./view/pages/inbox-page/conversation-page";
 import ShopPage from "./view/pages/shop-page/shop-page";
 import CreateListingPage from "./view/pages/shop-page/create-listing-page";
 import ListingPage from "./view/pages/shop-page/listing-page";
+import ProductPage from "./view/pages/product-page/product-page";
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/products/:listingId" element={<ProductPage />} />
       <Route path="/inbox" element={<InboxPage />}>
         <Route path=":userId" element={<ConversationPage />} />
       </Route>

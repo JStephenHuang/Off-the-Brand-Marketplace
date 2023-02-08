@@ -24,6 +24,16 @@ export const useListingsTools = () => {
   const [listingForm, setListingForm] =
     useState<IListingForm>(ListingFormDefault);
 
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+
+  const deletePreview = (file: File) => {
+    const currentFiles = [...imageFiles];
+
+    currentFiles.splice(imageFiles.indexOf(file), 1);
+
+    setImageFiles(currentFiles);
+  };
+
   // ! API calls function
 
   const createListing = async (listingForm: IListingForm) => {
@@ -31,14 +41,6 @@ export const useListingsTools = () => {
       await client
         .post("/listings", listingForm)
         .catch((error) => console.log(error));
-  };
-
-  const getAllListings = async () => {
-    const res = await client
-      .get(`/listings/`)
-      .catch((error) => console.log(error));
-
-    if (res) return res.data;
   };
 
   // ! On change handlers
@@ -95,6 +97,11 @@ export const useListingsTools = () => {
     });
   };
 
+  const previewUploads = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files === null) return;
+    setImageFiles([...imageFiles, event.target.files[0]]);
+  };
+
   const setInfo = {
     setInstituion: setInstituion,
     setHeadline: setHeadline,
@@ -104,7 +111,8 @@ export const useListingsTools = () => {
     setGender: setGender,
     setDescription: setDescription,
     setPrice: setPrice,
+    previewUploads: previewUploads,
   };
 
-  return { listingForm, setInfo, createListing, getAllListings };
+  return { listingForm, imageFiles, setInfo, createListing, deletePreview };
 };

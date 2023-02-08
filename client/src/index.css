@@ -4,7 +4,8 @@
 
 
 :root {
-  @apply font-bold
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  @apply font-normal
 }
 
 /* ! NAVBAR */
@@ -13,7 +14,7 @@
   .navbar {
     @apply fixed w-full h-[10%] z-[100]
     flex items-center justify-between
-    border-b px-5 font-normal bg-white
+    border-b px-5 bg-white
   }
 }
 
@@ -22,9 +23,14 @@
 @layer components {
   .upload-box {
     @apply w-[90%] aspect-square
-    grid place-items-center 
     border border-black 
-    text-gray-400 hover:bg-gray-200
+    text-gray-400 
+  }
+
+  .delete-upload-icon {
+    @apply absolute scale-0 m-3 text-white
+    group-hover:scale-100 hover:opacity-60 
+    z-[20] bg-yellow-500 cursor-pointer rounded-full
   }
 
   .select-input {

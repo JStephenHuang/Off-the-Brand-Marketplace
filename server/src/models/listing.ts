@@ -9,7 +9,7 @@ const listingSchema = new Schema(
     condition: { type: String },
     gender: { type: String },
     description: { type: String },
-    price: { type: String },
+    price: { type: Number },
     seller: { type: String },
     status: { type: String, required: true },
   },

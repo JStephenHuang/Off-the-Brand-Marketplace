@@ -25,3 +25,11 @@ export interface FormSectionProps {
     setPrice: (event: React.ChangeEvent<HTMLInputElement>) => void;
   };
 }
+
+export interface UploadSectionProps {
+  imageFiles: File[];
+  deletePreview: (file: File) => void;
+  setInfo: {
+    previewUploads: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  };
+}

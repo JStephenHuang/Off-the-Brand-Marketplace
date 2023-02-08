@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { IoClose } from "react-icons/io5";
 import { useListingsTools } from "../../../controllers/hooks/use-listings-tools";
 
 // ! Data
@@ -18,6 +18,7 @@ import {
   FormFieldProps,
   FormSectionProps,
   FormSelectProps,
+  UploadSectionProps,
 } from "./interfaces";
 
 // ! Form components
@@ -26,7 +27,7 @@ const FormField = (props: FormFieldProps) => {
   return (
     <div className="w-full flex items-start justify-between my-5">
       <div className="w-1/2 flex flex-col">
-        <p className="">{props.headline}</p>
+        <p className="font-medium">{props.headline}</p>
         <p className="text-[12px] font-light w-4/5">{props.subtitles}</p>
       </div>
       {props.field}
@@ -59,7 +60,7 @@ const FormSection = ({ listingForm, setInfo }: FormSectionProps) => {
     <div className="w-2/3 flex flex-col">
       {/* Headline */}
       <div className="flex flex-col">
-        <p className="">Headline</p>
+        <p className="font-medium">Headline</p>
         <p className="text-[12px] font-light">
           Give your listing a headline. The headline is the first piece of
           information customers will see in the product page
@@ -138,7 +139,7 @@ const FormSection = ({ listingForm, setInfo }: FormSectionProps) => {
       {/* Description */}
 
       <div className="flex flex-col">
-        <p className="">Description</p>
+        <p className="font-medium">Description</p>
         <p className="text-[12px] font-light">
           Give a concise description of your uniform. It should not be too long,
           avoid repetition and useless information.
@@ -156,7 +157,7 @@ const FormSection = ({ listingForm, setInfo }: FormSectionProps) => {
         subtitles="Select the gender of your uniform."
         field={
           <div className="flex items-center border w-[20%] p-2 border-black text-[20px]">
-            <p className="text-green-600">$</p>
+            <p className="text-green-600 font-extrabold">$</p>
             <input
               className="form-price-input"
               type="text"
@@ -173,7 +174,11 @@ const FormSection = ({ listingForm, setInfo }: FormSectionProps) => {
 
 // ! Upload images components
 
-const UploadSection = () => {
+const UploadSection = ({
+  imageFiles,
+  deletePreview,
+  setInfo,
+}: UploadSectionProps) => {
   return (
     <div className="w-1/3 h-[90%] overflow-y-auto flex flex-col ml-10">
       <div className="mb-3">
@@ -184,16 +189,37 @@ const UploadSection = () => {
         </p>
       </div>
 
-      <label htmlFor="dropzone-file" className="upload-box">
+      {imageFiles.map((image, key) => {
+        return (
+          <div
+            key={key}
+            className="upload-box group bg-black mb-5 flex justify-end"
+          >
+            <IoClose
+              onClick={() => deletePreview(image)}
+              className="delete-upload-icon"
+              size={16}
+            />
+            <img
+              className="w-full h-full group-hover:opacity-60 "
+              src={URL.createObjectURL(image)}
+            />
+          </div>
+        );
+      })}
+
+      <label
+        htmlFor="dropzone-file"
+        className="upload-box hover:bg-gray-200 grid place-items-center"
+      >
         <div className="flex flex-col justify-center items-center">
           <p className="mb-2 font-medium">Upload a photo</p>
         </div>
         <input
           id="dropzone-file"
-          name="imageURL"
           type="file"
           className="hidden"
-          onChange={(event) => {}}
+          onChange={setInfo.previewUploads}
         />
       </label>
     </div>
@@ -201,17 +227,22 @@ const UploadSection = () => {
 };
 
 const CreateListingPage = () => {
-  const { listingForm, setInfo, createListing } = useListingsTools();
+  const { listingForm, imageFiles, deletePreview, setInfo, createListing } =
+    useListingsTools();
 
   return (
     <div className="w-3/4 h-full">
-      <div className="m-5 text-[30px] font-extrabold border-b border-gray-300">
+      <div className="m-5 text-[30px] font-bold border-b border-gray-300">
         List an uniform
       </div>
       <div className="flex flex-col">
         <div className="flex h-full px-5">
           <FormSection listingForm={listingForm} setInfo={setInfo} />
-          <UploadSection />
+          <UploadSection
+            imageFiles={imageFiles}
+            deletePreview={deletePreview}
+            setInfo={setInfo}
+          />
         </div>
         <button
           className="font-extrabold w-1/5 p-3 m-5 rounded-sm bg-black text-[20px] text-white hover:opacity-60"

@@ -12,7 +12,7 @@ const Navbar = () => {
         Off the Brand
       </Link>
       <div>
-        <Link className="mr-5" to="/shop/listings">
+        <Link className="mr-5" to="/shop/new">
           Sell
         </Link>
         <Link className="mr-5" to="/inbox">
