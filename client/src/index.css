@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
   @apply font-normal
+  
 }
 
 /* ! NAVBAR */
@@ -14,7 +13,7 @@
   .navbar {
     @apply fixed w-full h-[10%] z-[100]
     flex items-center justify-between
-    border-b px-5 bg-white
+    border-b px-10 bg-white
   }
 }
 
@@ -22,9 +21,9 @@
 
 @layer components {
   .upload-box {
-    @apply w-[90%] aspect-square
+    @apply w-full aspect-square
     border border-black 
-    text-gray-400 
+    text-gray-400 rounded-sm
   }
 
   .delete-upload-icon {
@@ -34,19 +33,19 @@
   }
 
   .select-input {
-    @apply w-1/2 h-auto flex items-center justify-between 
+    @apply h-auto flex items-center justify-between 
     border px-2 border-black
-    bg-inherit font-medium py-[0.65rem]
+    bg-inherit py-[0.65rem] rounded-sm
   }
 
   .form-headline-input {
     @apply w-full border border-black
-    outline-none p-2 bg-transparent mt-3
+    outline-none p-2 bg-transparent rounded-sm
   }
 
   .form-price-input { 
     @apply border-none ml-2 
     outline-none w-full
-    bg-transparent font-medium
+    bg-transparent 
   }
 }

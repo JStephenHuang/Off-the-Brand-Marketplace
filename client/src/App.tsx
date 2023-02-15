@@ -8,6 +8,7 @@ import ShopPage from "./view/pages/shop-page/shop-page";
 import CreateListingPage from "./view/pages/shop-page/create-listing-page";
 import ListingPage from "./view/pages/shop-page/listing-page";
 import ProductPage from "./view/pages/product-page/product-page";
+import ProfilePage from "./view/pages/profile-page/profile-page";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Route path="/" element={<MainPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/products/:listingId" element={<ProductPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="/inbox" element={<InboxPage />}>
         <Route path=":userId" element={<ConversationPage />} />
       </Route>

@@ -8,14 +8,13 @@ export interface FormSelectProps {
 }
 export interface FormFieldProps {
   headline: string;
-  subtitles: string;
   field: JSX.Element;
 }
 
 export interface FormSectionProps {
   listingForm: IListingForm;
   setInfo: {
-    setInstituion: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    setInstitution: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     setHeadline: (event: React.ChangeEvent<HTMLInputElement>) => void;
     setSize: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     setCondition: (event: React.ChangeEvent<HTMLSelectElement>) => void;

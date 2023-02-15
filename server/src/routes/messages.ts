@@ -6,27 +6,28 @@ const router = Router();
 
 router.get("/", isAuthenticated, async (req: Request, res: Response) => {
   const messages = await Message.find({
-    recipients: { $in: [req.user._id, req.query.userId] },
-    productId: req.query.productId,
-  });
+    buyer: req.user._id,
+  }).populate({ path: "listingId" });
 
   return res.status(200).json(messages);
 });
 
 router.post("/", isAuthenticated, async (req: Request, res: Response) => {
-  const { userId, productId, content } = req.body;
+  const { sellerId, listingId, body } = req.body;
 
-  if (!userId) return res.status(400).json("ClientError: missing receiver id.");
-  if (!productId)
+  if (!sellerId)
+    return res.status(400).json("ClientError: missing receiver id.");
+  if (!listingId)
     return res.status(400).json("ClientError: missing product id.");
-  if (!content) return res.status(400).json("ClientError: missing content.");
+  if (!body) return res.status(400).json("ClientError: missing body.");
+
+  if (body === "") return res.status(400).json("ClientError: empty body.");
 
   await Message.create({
-    recipients: [req.user._id, userId],
-    sender: req.user._id,
-    receiver: userId,
-    productId: productId,
-    content: content,
+    buyerId: req.user._id,
+    sellerId: sellerId,
+    listingId: listingId,
+    body: body,
   });
 });
 

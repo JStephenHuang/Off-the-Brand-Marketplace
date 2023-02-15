@@ -10,7 +10,7 @@ const listingSchema = new Schema(
     gender: { type: String },
     description: { type: String },
     price: { type: Number },
-    seller: { type: String },
+    seller: { type: String, ref: "User", unique: true },
     status: { type: String, required: true },
   },
   {

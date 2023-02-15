@@ -2,14 +2,12 @@ import { useListings } from "../../../controllers/hooks/use-listings";
 import { useUser } from "../../../controllers/hooks/use-user";
 import Navbar from "../../components/navbar";
 import ListingCards from "../../components/listing-cards";
+import { useMessages } from "../../../controllers/hooks/use-messages";
 
 const MainPage = () => {
-  const { isLoading, isLoggedIn } = useUser();
-  const { allListings } = useListings();
+  const { listings } = useListings();
 
-  if (isLoading) return <div>Loading</div>;
-
-  console.log(allListings);
+  console.log(listings);
 
   return (
     <div className="w-screen h-screen text-center">
@@ -17,10 +15,26 @@ const MainPage = () => {
         <Navbar />
       </header>
       <div className="flex flex-col items-center">
-        <div className="w-4/5 my-5 grid grid-cols-4 gap-3">
-          {allListings.map((listing, key) => (
-            <ListingCards key={key} listing={listing} />
-          ))}
+        <div className="w-full h-[25rem] bg-black"></div>
+        <div className="w-4/5 mt-10">
+          <div className="w-full">
+            <p className="font-bold text-[20px] text-start mb-5">
+              New uniforms
+            </p>
+            <div className="grid grid-cols-5 gap-3 mb-10">
+              {listings.slice(0, 5).map((listing, key) => (
+                <ListingCards key={key} listing={listing} />
+              ))}
+            </div>
+          </div>
+          <div className="w-full">
+            <p className="font-bold text-[20px] text-start mb-5">New</p>
+            <div className="grid grid-cols-4 gap-3 mb-10">
+              {listings.slice(0, 4).map((listing, key) => (
+                <ListingCards key={key} listing={listing} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -9,11 +9,10 @@ export interface IUser {
 }
 
 export interface IMessage {
-  recipients: [string];
-  sender: string;
-  receiver: string;
-  productId: string;
-  content: string;
+  buyer: string;
+  seller: IUser;
+  listingId: IListing;
+  body: string;
 }
 
 export interface IListing {
@@ -26,7 +25,7 @@ export interface IListing {
   type: string;
   description: string;
   price: number;
-  seller: string;
+  seller: IUser;
 }
 
 export interface IListingForm {

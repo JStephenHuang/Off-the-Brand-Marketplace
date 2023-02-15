@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { IListingForm } from "../../types/types";
 import { useFirebaseUser } from "../contexts/firebase-app-context";
 import { useAPIClient } from "./use-api-client";
 
-export const useListingsTools = () => {
+export const useListingForm = () => {
   const firebaseUser = useFirebaseUser();
   const client = useAPIClient();
 
@@ -45,7 +45,7 @@ export const useListingsTools = () => {
 
   // ! On change handlers
 
-  const setInstituion = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const setInstitution = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListingForm({
       ...listingForm,
       institution: event.target.value,
@@ -54,25 +54,25 @@ export const useListingsTools = () => {
   const setType = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListingForm({
       ...listingForm,
-      type: event.target.value,
+      type: event.target.value.trim(),
     });
   };
   const setSize = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListingForm({
       ...listingForm,
-      size: event.target.value,
+      size: event.target.value.trim(),
     });
   };
   const setHeadline = (event: React.ChangeEvent<HTMLInputElement>) => {
     setListingForm({
       ...listingForm,
-      headline: event.target.value,
+      headline: event.target.value.trim(),
     });
   };
   const setCondition = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListingForm({
       ...listingForm,
-      condition: event.target.value,
+      condition: event.target.value.trim(),
     });
   };
 
@@ -93,7 +93,7 @@ export const useListingsTools = () => {
   const setGender = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setListingForm({
       ...listingForm,
-      gender: event.target.value,
+      gender: event.target.value.trim(),
     });
   };
 
@@ -103,7 +103,7 @@ export const useListingsTools = () => {
   };
 
   const setInfo = {
-    setInstituion: setInstituion,
+    setInstitution: setInstitution,
     setHeadline: setHeadline,
     setSize: setSize,
     setCondition: setCondition,
