@@ -12,6 +12,30 @@ router.get("/", isAuthenticated, async (req: Request, res: Response) => {
   return res.status(200).json(messages);
 });
 
+router.get(
+  "/conversations",
+  isAuthenticated,
+  async (req: Request, res: Response) => {
+    const conversations = await Message.aggregate([
+      { $match: { $or: [{ buyerId: req.user._id, sellerId: req.user._id }] } },
+      {
+        $group: {
+          _id: {
+            buyerId: "$buyerId",
+            sellerId: "$sellerId",
+            listingId: "$listingId",
+          },
+          latestMessage: { $first: "$body" },
+          latestTimestamp: { $first: "$updatedAt" },
+        },
+      },
+      { $sort: { createAt: -1 } },
+    ]);
+
+    res.status(200).json(conversations);
+  }
+);
+
 router.post("/", isAuthenticated, async (req: Request, res: Response) => {
   const { sellerId, listingId, body } = req.body;
 
