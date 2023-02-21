@@ -17,7 +17,12 @@ router.get(
   isAuthenticated,
   async (req: Request, res: Response) => {
     const conversations = await Message.aggregate([
-      { $match: { $or: [{ buyerId: req.user._id, sellerId: req.user._id }] } },
+      {
+        $match: {
+          $or: [{ buyerId: req.user._id }, { sellerId: req.user._id }],
+        },
+      },
+      { $sort: { createAt: -1 } },
       {
         $group: {
           _id: {
@@ -29,7 +34,6 @@ router.get(
           latestTimestamp: { $first: "$updatedAt" },
         },
       },
-      { $sort: { createAt: -1 } },
     ]);
 
     res.status(200).json(conversations);
