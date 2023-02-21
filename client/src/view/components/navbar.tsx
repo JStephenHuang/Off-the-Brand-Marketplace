@@ -15,7 +15,7 @@ const Navbar = () => {
       </Link>
       {isLoggedIn && (
         <div className="h-full flex items-center">
-          <Link className="mr-5" to="/shop/new">
+          <Link className="mr-5" to="/new">
             Sell
           </Link>
           <Link className="mr-5" to="/inbox">
@@ -41,7 +41,7 @@ const Navbar = () => {
 
           <div
             style={{ boxShadow: "0 0 12px #D3D3D3" }}
-            className="fixed w-[12%] flex flex-col top-[8%] right-[2%] rounded-sm bg-white font-light"
+            className="fixed w-[12%] flex flex-col top-[8%] right-[3%] rounded-sm bg-white"
           >
             <Link
               to="/profile"
@@ -50,7 +50,7 @@ const Navbar = () => {
               Your profile
             </Link>
             <Link
-              to="/shop"
+              to="/shop/listings/active"
               className="py-4 px-3 border-y hover:bg-black hover:text-white w-full tracking-wider text-center"
             >
               Your shop

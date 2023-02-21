@@ -1,28 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IListingForm } from "../../types/types";
 import { useFirebaseUser } from "../contexts/firebase-app-context";
 import { useAPIClient } from "./use-api-client";
+import { useNavigate } from "react-router-dom";
 
-export const useListingForm = () => {
+export const useListingForm = (listingId: string | null) => {
   const firebaseUser = useFirebaseUser();
   const client = useAPIClient();
+  const navigate = useNavigate();
 
   const isLoading = firebaseUser === undefined;
   const isLoggedIn = firebaseUser !== null;
 
-  const ListingFormDefault: IListingForm = {
-    headline: "",
-    institution: "",
-    size: "",
-    type: "",
-    condition: "",
-    gender: "",
-    description: "",
-    price: 0.0,
-  };
+  const [listingForm, setListingForm] = useState<IListingForm>({});
 
-  const [listingForm, setListingForm] =
-    useState<IListingForm>(ListingFormDefault);
+  useEffect(() => {
+    (async () => {
+      if (listingId === null) {
+        setListingForm({
+          headline: "",
+          institution: "",
+          size: "",
+          type: "",
+          condition: "",
+          gender: "",
+          description: "",
+          price: 0.0,
+        });
+      } else {
+        const res = await client
+          .get(`/listings/form/${listingId}`)
+          .catch((error) => console.log(error));
+
+        if (res) setListingForm(res.data);
+      }
+    })();
+  }, []);
 
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
@@ -41,6 +54,14 @@ export const useListingForm = () => {
       await client
         .post("/listings", listingForm)
         .catch((error) => console.log(error));
+  };
+  const editListing = async (listingForm: IListingForm) => {
+    if (!isLoading && isLoggedIn && listingId) {
+      await client
+        .put(`/listings/${listingId}`, listingForm)
+        .catch((error) => console.log(error));
+      navigate("/shop/listings/active");
+    }
   };
 
   // ! On change handlers
@@ -114,5 +135,12 @@ export const useListingForm = () => {
     previewUploads: previewUploads,
   };
 
-  return { listingForm, imageFiles, setInfo, createListing, deletePreview };
+  return {
+    listingForm,
+    imageFiles,
+    setInfo,
+    createListing,
+    deletePreview,
+    editListing,
+  };
 };

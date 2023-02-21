@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { IListing } from "../../types/types";
 
-const ListingCards = ({ listing }: { listing: IListing }) => {
+const ListingCard = ({ listing }: { listing: IListing }) => {
   return (
     <Link to={`/products/${listing._id}`}>
       <div className="aspect-square bg-black rounded-sm" />
@@ -18,4 +18,4 @@ const ListingCards = ({ listing }: { listing: IListing }) => {
   );
 };
 
-export default ListingCards;
+export default ListingCard;

@@ -6,12 +6,34 @@ import Navbar from "../../components/navbar";
 
 interface SidebarLinkProps {
   label: string;
-  section: string;
+  path: string;
   // icon: JSX.Element;
 }
 
+const SidebarLink = (props: SidebarLinkProps) => {
+  return (
+    <NavLink
+      to={`${props.path}`}
+      className={({ isActive }) =>
+        isActive ? "shop-sidebar-link" : "shop-sidebar-link-active"
+      }
+    >
+      {props.label}
+    </NavLink>
+  );
+};
+
+const ShopSiderbar = () => {
+  return (
+    <div className="w-1/5 flex flex-col border-r h-full font-bold fixed">
+      <SidebarLink label="Listings" path="listings" />
+      <SidebarLink label="Dashboard" path="dashboard" />
+    </div>
+  );
+};
+
 const ShopPage = () => {
-  const { user, isLoading, isLoggedIn } = useUser();
+  const { isLoading, isLoggedIn } = useUser();
 
   if (isLoading) return <div>Loading</div>;
 
@@ -23,7 +45,10 @@ const ShopPage = () => {
         <Navbar />
       </header>
 
-      <div className="flex flex-col items-center">
+      <div className="flex w-full h-full">
+        <div className="w-1/5">
+          <ShopSiderbar />
+        </div>
         <Outlet />
       </div>
     </div>
