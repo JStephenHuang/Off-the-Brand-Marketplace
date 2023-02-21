@@ -1,7 +1,7 @@
 import { IoClose } from "react-icons/io5";
 import { useListingForm } from "../../../controllers/hooks/use-listing-form";
 import { useUser } from "../../../controllers/hooks/use-user";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Navbar from "../../components/navbar";
 
@@ -151,7 +151,7 @@ const FormSection = ({ listingForm, setInfo }: FormSectionProps) => {
               className="form-price-input"
               type="number"
               placeholder="0.00"
-              value={listingForm.price || ""}
+              value={listingForm.price || undefined}
               onChange={setInfo.setPrice}
             />
           </div>
@@ -210,10 +210,15 @@ const UploadSection = ({
   );
 };
 
-const CreateListingPage = () => {
+const EditListingPage = () => {
+  const params = useParams();
+
+  if (params.listingId === undefined) return <div>Listing not found!</div>;
+
   const { isLoading, isLoggedIn } = useUser();
-  const { listingForm, imageFiles, deletePreview, setInfo, createListing } =
-    useListingForm(null);
+
+  const { listingForm, imageFiles, deletePreview, setInfo, editListing } =
+    useListingForm(params.listingId);
 
   if (isLoading) return <div>Loading</div>;
 
@@ -225,15 +230,11 @@ const CreateListingPage = () => {
     );
 
   return (
-    <div className="w-screen h-screen">
-      <header className="h-[10%]">
-        <Navbar />
-      </header>
-
+    <div className="w-4/5">
       <div className="flex w-full justify-center">
-        <div className="w-[60%] h-full">
+        <div className="w-4/5 h-full">
           <div className="m-5 text-[30px] font-bold border-b border-gray-300">
-            List an uniform
+            Edit your listing.
           </div>
           <div className="flex flex-col">
             <div className="flex h-full px-5 justify-between">
@@ -246,9 +247,9 @@ const CreateListingPage = () => {
             </div>
             <button
               className="font-extrabold w-1/5 p-3 m-5 rounded-sm bg-black text-[20px] text-white hover:opacity-60"
-              onClick={() => createListing(listingForm)}
+              onClick={async () => await editListing(listingForm)}
             >
-              Create Listing
+              Save changes
             </button>
           </div>
         </div>
@@ -257,4 +258,4 @@ const CreateListingPage = () => {
   );
 };
 
-export default CreateListingPage;
+export default EditListingPage;

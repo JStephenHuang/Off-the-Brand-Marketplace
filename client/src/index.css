@@ -7,7 +7,7 @@
   
 }
 
-/* ! NAVBAR */
+/* ! NAVBAR ! */
 
 @layer components {
   .navbar {
@@ -17,7 +17,7 @@
   }
 }
 
-/* ! CREATE LISTING PAGE */
+/* ! CREATE LISTING PAGE ! */
 
 @layer components {
   .upload-box {
@@ -47,5 +47,17 @@
     @apply border-none ml-2 
     outline-none w-full
     bg-transparent 
+  }
+}
+
+/* ! SHOP PAGE ! */
+
+@layer components {
+  .shop-sidebar-link {
+    @apply w-full p-5 border-l-4 pl-8 border-black
+  }
+  
+  .shop-sidebar-link-active {
+    @apply w-full p-5 border-l-4 hover:bg-gray-100 border-transparent
   }
 }

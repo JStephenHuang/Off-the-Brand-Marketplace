@@ -1,13 +1,13 @@
 import { useListings } from "../../../controllers/hooks/use-listings";
 import { useUser } from "../../../controllers/hooks/use-user";
 import Navbar from "../../components/navbar";
-import ListingCards from "../../components/listing-cards";
+import ListingCard from "../../components/listing-cards";
 import { useMessages } from "../../../controllers/hooks/use-messages";
 
 const MainPage = () => {
   const { listings } = useListings();
 
-  console.log(listings);
+  if (listings === undefined) return <div>Loading</div>;
 
   return (
     <div className="w-screen h-screen text-center">
@@ -17,24 +17,24 @@ const MainPage = () => {
       <div className="flex flex-col items-center">
         <div className="w-full h-[25rem] bg-black"></div>
         <div className="w-4/5 mt-10">
-          <div className="w-full">
+          <section className="w-full">
             <p className="font-bold text-[20px] text-start mb-5">
               New uniforms
             </p>
             <div className="grid grid-cols-5 gap-3 mb-10">
               {listings.slice(0, 5).map((listing, key) => (
-                <ListingCards key={key} listing={listing} />
+                <ListingCard key={key} listing={listing} />
               ))}
             </div>
-          </div>
-          <div className="w-full">
+          </section>
+          <section className="w-full">
             <p className="font-bold text-[20px] text-start mb-5">New</p>
             <div className="grid grid-cols-4 gap-3 mb-10">
               {listings.slice(0, 4).map((listing, key) => (
-                <ListingCards key={key} listing={listing} />
+                <ListingCard key={key} listing={listing} />
               ))}
             </div>
-          </div>
+          </section>
         </div>
       </div>
     </div>
