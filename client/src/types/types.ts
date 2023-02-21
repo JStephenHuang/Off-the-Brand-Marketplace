@@ -15,6 +15,16 @@ export interface IMessage {
   body: string;
 }
 
+export interface IConversation {
+  _id: {
+    buyerId: string;
+    sellerId: string;
+    listingId: string;
+  };
+  latestMessage: string;
+  latestTimestamp: Date;
+}
+
 export interface IListing {
   _id: string;
   headline: string;

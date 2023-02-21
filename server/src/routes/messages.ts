@@ -16,6 +16,7 @@ router.get(
   "/conversations",
   isAuthenticated,
   async (req: Request, res: Response) => {
+    console.log(req.user._id);
     const conversations = await Message.aggregate([
       {
         $match: {
@@ -35,6 +36,8 @@ router.get(
         },
       },
     ]);
+
+    console.log(conversations);
 
     res.status(200).json(conversations);
   }

@@ -1,28 +1,28 @@
 import { NavLink, Outlet, useNavigate, useOutlet } from "react-router-dom";
 import { useUser } from "../../../controllers/hooks/use-user";
-import { useMessages } from "../../../controllers/hooks/use-messages";
+import {
+  useConversations,
+  useMessages,
+} from "../../../controllers/hooks/use-messages";
 import Navbar from "../../components/navbar";
-import { IMessage } from "../../../types/types";
+import { IConversation } from "../../../types/types";
 
-interface UserCardProps {
-  message: IMessage;
+interface ConversationCardProps {
+  conversation: IConversation;
 }
 
-const UserCard = ({ message }: UserCardProps) => {
+const ConversationCard = ({ conversation }: ConversationCardProps) => {
   const userStyle = ({ isActive }: { isActive: boolean }) => {
     if (isActive) return "w-full bg-gray-200 h-[5.5rem] flex items-center px-5";
     return "w-full h-[5.5rem] flex items-center px-5 hover:bg-gray-100";
   };
 
   return (
-    <NavLink
-      to={`seller=${message.seller}&listing=${message.listingId._id}`}
-      className={userStyle}
-    >
+    <NavLink to={`/`} className={userStyle}>
       <div className="h-1/2 aspect-square bg-black rounded-full" />
       <div className="flex flex-col p-3">
-        <p className="">{message.listingId.headline}</p>
-        <p className="font-thin text-[12px]">{message.body}</p>
+        <p className="">{conversation._id.buyerId}</p>
+        <p className="font-thin text-[12px]">{conversation.latestMessage}</p>
       </div>
     </NavLink>
   );
@@ -30,7 +30,10 @@ const UserCard = ({ message }: UserCardProps) => {
 
 const InboxPage = () => {
   const { user, isLoading, isLoggedIn } = useUser();
-  const { allMessages } = useMessages();
+  const { conversations } = useConversations();
+
+  console.log(conversations);
+  // const { allMessages } = useMessages();
 
   const navigate = useNavigate();
   const outlet = useOutlet();
@@ -52,8 +55,8 @@ const InboxPage = () => {
             Messages
           </div>
           <div className="py-2">
-            {allMessages.map((message, key) => (
-              <UserCard key={key} message={message} />
+            {conversations.map((conversation, key) => (
+              <ConversationCard key={key} conversation={conversation} />
             ))}
           </div>
         </div>

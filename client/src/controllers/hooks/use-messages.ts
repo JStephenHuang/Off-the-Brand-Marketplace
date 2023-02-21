@@ -1,7 +1,33 @@
 import { useAPIClient } from "./use-api-client";
 import { useFirebaseUser } from "../contexts/firebase-app-context";
 import { useEffect, useState } from "react";
-import { IMessage } from "../../types/types";
+import { IConversation, IMessage } from "../../types/types";
+
+export const useConversations = () => {
+  const firebaseUser = useFirebaseUser();
+  const client = useAPIClient();
+
+  const [conversations, setConversations] = useState<IConversation[]>([]);
+  const isLoading = firebaseUser === undefined;
+  const isLoggedIn = firebaseUser !== null;
+
+  useEffect(() => {
+    (async () => {
+      if (!isLoading && isLoggedIn) {
+        const res = await client
+          .get("/messages/conversations")
+          .catch((error) => console.log(error));
+
+        if (res) {
+          setConversations(res.data);
+          console.log(res.data);
+        }
+      }
+    })();
+  }, [isLoading, isLoggedIn]);
+
+  return { conversations };
+};
 
 export const useMessages = () => {
   const firebaseUser = useFirebaseUser();
